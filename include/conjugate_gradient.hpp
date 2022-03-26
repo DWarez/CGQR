@@ -1,8 +1,3 @@
-
-//
-// Created by dwarez on 24/03/22.
-//
-
 #ifndef CGQR_CONJUGATE_GRADIENT_HPP
 #define CGQR_CONJUGATE_GRADIENT_HPP
 
@@ -21,10 +16,6 @@ void conjugate_gradient(const arma::mat &X, const arma::vec &b, arma::vec &w, in
         auto beta = (arma::dot(residual.t(), residual))/(arma::dot(previous_residual.t(), previous_residual));
         direction = residual + (beta * direction);
     }
-}
-
-void test(arma::vec &w) {
-    w = arma::zeros(w.n_elem);
 }
 
 #endif //CGQR_CONJUGATE_GRADIENT_HPP

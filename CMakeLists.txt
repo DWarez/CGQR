@@ -6,6 +6,9 @@ set(CMAKE_CXX_STANDARD 20)
 find_package(Armadillo REQUIRED)
 include_directories(${ARMADILLO_INCLUDE_DIRS})
 
-add_executable(CGQR src/main.cpp src/main.cpp include/conjugate_gradient.hpp)
+add_executable(CGQR src/main.cpp include/conjugate_gradient.hpp include/qr_factorization.hpp)
+
+add_executable(qr_test tests/qr_test.cpp)
 
 target_link_libraries(CGQR ${ARMADILLO_LIBRARIES})
+target_link_libraries(qr_test ${ARMADILLO_LIBRARIES})
