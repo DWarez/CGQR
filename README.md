@@ -20,7 +20,7 @@ Then:
 
 ```bash
 # clone the repository
-$ git clone https://github.com/DWarez/CGQR`
+$ git clone https://github.com/DWarez/CGQR
 
 # navigate into it
 $ cd CGQR
