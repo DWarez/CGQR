@@ -1,5 +1,0 @@
-/home/dwarez/Documents/uni/CM/CGQR/cmake-build-debug/CMakeFiles/CGQR.dir
-/home/dwarez/Documents/uni/CM/CGQR/cmake-build-debug/CMakeFiles/qr_test.dir
-/home/dwarez/Documents/uni/CM/CGQR/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/dwarez/Documents/uni/CM/CGQR/cmake-build-debug/CMakeFiles/cg_test.dir
-/home/dwarez/Documents/uni/CM/CGQR/cmake-build-debug/CMakeFiles/edit_cache.dir
