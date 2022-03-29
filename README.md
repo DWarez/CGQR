@@ -26,5 +26,7 @@ $ git clone https://github.com/DWarez/CGQR
 $ cd CGQR
 
 # make
-$ cmake .; make
+$ cmake -B build
+$ cd build
+$ make
 ```
