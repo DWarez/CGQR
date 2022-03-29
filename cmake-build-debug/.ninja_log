@@ -1,0 +1,13 @@
+# ninja log v5
+2	2782	1648548013060513399	CMakeFiles/cg_test.dir/src/conjugate_gradient.cpp.o	ede2bd09422dbfc2
+1	2827	1648548760362388681	CMakeFiles/qr_test.dir/src/qr_factorization.cpp.o	bb67186fb51c318e
+1	3065	1648547783627301438	CMakeFiles/CGQR.dir/src/main.cpp.o	1691148587ffd309
+2	3009	1648547783570635618	CMakeFiles/CGQR.dir/src/conjugate_gradient.cpp.o	b3518ea824fecf10
+3066	3243	1648547783803965464	CGQR	af8c77b345bd0a6d
+1	2778	1648547909252082443	CMakeFiles/cg_test.dir/tests/cg_test.cpp.o	f5bc21869f56ce72
+2724	2812	1648402215021632171	qr_test	2830087bce1330c5
+2782	2888	1648548013167178449	cg_test	f4540b3373d7d125
+1	2733	1648548801145092110	CMakeFiles/qr_test.dir/tests/qr_test.cpp.o	ed0d25048b78460d
+2	2838	1648549003321965921	CMakeFiles/qr_test.dir/tests/qr_test.cpp.o	ed0d25048b78460d
+1	2905	1648549024064978234	CMakeFiles/qr_test.dir/src/qr_factorization.cpp.o	bb67186fb51c318e
+2905	3006	1648549024168309968	qr_test	57638f67ca75264d

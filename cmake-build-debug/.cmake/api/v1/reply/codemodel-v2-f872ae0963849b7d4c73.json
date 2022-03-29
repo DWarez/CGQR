@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.21"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "CGQR",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "CGQR::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CGQR-Debug-e772f6b8831a07a945b9.json",
+					"name" : "CGQR",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "cg_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-cg_test-Debug-4767d46558d59d8e8308.json",
+					"name" : "cg_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "qr_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-qr_test-Debug-1080e369e6582788c801.json",
+					"name" : "qr_test",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/dwarez/Documents/uni/CM/CGQR/cmake-build-debug",
+		"source" : "/home/dwarez/Documents/uni/CM/CGQR"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

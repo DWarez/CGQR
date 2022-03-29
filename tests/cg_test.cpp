@@ -11,10 +11,15 @@ bool cg_random_test() {
     X = X.t() * X;
 
     std::cout << "Norm before: " << arma::norm(X*w - b, 2) << std::endl;
-    conjugate_gradient(X, b, w, 5);
+    w = conjugate_gradient(X, b, 5);
 
     std::cout << "Norm after: " << arma::norm(X*w - b, 2) << std::endl;
     std::cout << "Result\n w = " << w << std::endl;
 
     return true;
+}
+
+int main() {
+    cg_random_test();
+    return 0;
 }

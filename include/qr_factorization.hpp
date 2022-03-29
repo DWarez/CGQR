@@ -2,21 +2,23 @@
 #define CGQR_QR_FACTORIZATION_HPP
 
 #include <iostream>
+#include <cassert>
 #include <armadillo>
 
-typedef std::pair<arma::vec, double> hh_vec;
+/**
+ * Computes the householder reflector of a given vector
+ * @param x input vector
+ * @return x's reflector
+ */
+arma::vec compute_householder(const arma::vec &x);
 
-hh_vec compute_householder(const arma::vec &x) {
-    arma::vec v(x);
-    double s = arma::norm(x, 2);
-
-    if(x(0) >= 0)
-        s = -s;
-
-    v(0) = v(0) - s;
-    double norm = arma::norm(v, 2);
-    v = v/norm;
-    return {v, s};
-}
+/**
+ * Computes the set of householder reflectors from a given matrix.
+ * This method is used to compute the QR factorization, hence at each step
+ * a column of X is considered and the length of the reflector decreases by 1.
+ * @param X input matrix
+ * @return set of householder reflectors
+ */
+std::vector<arma::vec> householder_set(const arma::mat &X);
 
 #endif //CGQR_QR_FACTORIZATION_HPP
