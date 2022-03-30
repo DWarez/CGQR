@@ -2,7 +2,7 @@
 
 _Conjugate Gradient, QR factorization_
 
-This repository contains the source code and material of our project for the Computational Mathematics's course
+This repository contains the source code and material of our project for the Computational Mathematics course
 at University of Pisa, a.y. 2021/22.
 
 Authors: [Dario Salvati](https://github.com/DWarez), [Andrea Zuppolini](https://github.com/AndreZupp)
