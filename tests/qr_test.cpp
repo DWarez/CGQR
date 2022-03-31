@@ -21,8 +21,10 @@ bool hh_random_test() {
     std::cout << "Modified matrix X: " << std::endl;
     std::cout << H * X << std::endl;
 
+
     return true;
 }
+
 
 bool hh_set_random_test() {
     arma::arma_rng::set_seed_random();
@@ -66,8 +68,33 @@ bool thin_qr_random_test() {
 int main() {
     // hh_random_test();
     // hh_set_random_test();
-    matrix_expansion_random_test();
+    //matrix_expansion_random_test();
     // thin_qr_random_test();
+    arma::mat X(4,4);
+    X(0,0) = 7;
+    X(0,1) = 9;
+    X(0,2) = 1;
+    X(0,3) = 6;
+    X(1,0) = 5;
+    X(1,1) = 8;
+    X(1,2) = 9;
+    X(1,3) = 4;
+    X(2,0) = 9;
+    X(2,1) = 4;
+    X(2,2) = 10;
+    X(2,3) = 5;
+    X(3,0) = 4;
+    X(3,1) = 6;
+    X(3,2) = 8;
+
+    std::pair result = thin_qr(X);
+    arma::mat Q = std::get<0>(result);
+    arma::mat R = std::get<1>(result);
+
+    std::cout << "X matrix \n" << X << std::endl;
+    std::cout << "Q*R matrix \n" << Q*R << std::endl;
+    //Notice that the Q*R works only if X is square since the thin_qr method only gives back Q1
+
     return 0;
 }
 
