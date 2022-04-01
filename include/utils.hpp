@@ -25,6 +25,6 @@ arma::vec trim_head_vector(const arma::vec &x, int n);
  * @param m desired dimension
  * @return expanded matrix
  */
-arma::mat expand_matrix(const arma::mat &X, int m);
+arma::mat expand_matrix(const arma::mat &X, uint m);
 
 #endif //CGQR_UTILS_HPP

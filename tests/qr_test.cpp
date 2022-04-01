@@ -25,21 +25,6 @@ bool hh_random_test() {
     return true;
 }
 
-
-bool hh_set_random_test() {
-    arma::arma_rng::set_seed_random();
-    arma::mat X(5, 5, arma::fill::randn);
-
-    std::vector<arma::vec> hh_set;
-    hh_set = householder_set(X);
-
-    for(const auto& hh_vector:hh_set) {
-        std::cout << hh_vector << std::endl;
-    }
-
-    return true;
-}
-
 bool matrix_expansion_random_test() {
     arma::arma_rng::set_seed_random();
     arma::mat X(5, 5, arma::fill::randn);
@@ -64,12 +49,7 @@ bool thin_qr_random_test() {
     return true;
 }
 
-
-int main() {
-    // hh_random_test();
-    // hh_set_random_test();
-    //matrix_expansion_random_test();
-    // thin_qr_random_test();
+bool thin_qr_specific_test() {
     arma::mat X(4,4);
     X(0,0) = 7;
     X(0,1) = 9;
@@ -91,10 +71,17 @@ int main() {
     arma::mat Q = std::get<0>(result);
     arma::mat R = std::get<1>(result);
 
-    std::cout << "X matrix \n" << X << std::endl;
-    std::cout << "Q*R matrix \n" << Q*R << std::endl;
-    //Notice that the Q*R works only if X is square since the thin_qr method only gives back Q1
+    std::cout << "X: \n" << X << std::endl;
+    std::cout << "Q1 \n" << Q << std::endl;
+    std::cout << "R \n" << R << std::endl;
+}
 
+int main() {
+    // hh_random_test();
+    // hh_set_random_test();
+    //matrix_expansion_random_test();
+    // thin_qr_random_test();
+    thin_qr_specific_test();
     return 0;
 }
 

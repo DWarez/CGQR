@@ -17,7 +17,7 @@ arma::vec trim_head_vector(const arma::vec &x, int n) {
     return modified;
 }
 
-arma::mat expand_matrix(const arma::mat &X, int m) {
+arma::mat expand_matrix(const arma::mat &X, uint m) {
     arma::mat modified = arma::eye(m, m);
 
     for(size_t i = m - X.n_rows; i < m; ++i) {
