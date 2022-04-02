@@ -89,11 +89,11 @@ bool solve_thin_qr_random_test() {
     arma::vec b(X.n_rows, arma::fill::randn);
     arma::vec w(X.n_cols, arma::fill::randn);
 
-    std::cout << "Norm before: " << arma::norm(X*w - b) << std::endl;
+    std::cout << "Norm before: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
 
     w = solve_thin_qr(Q, R, b);
 
-    std::cout << "Norm after: " << arma::norm(X*w - b) << std::endl;
+    std::cout << "Norm after: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
 
     return true;
 }

@@ -1,4 +1,5 @@
 #include <armadillo>
+#include "../include/utils.hpp"
 
 void to_normal_equations(arma::mat &X, arma::vec &b) {
     X = X * X.t();
@@ -15,4 +16,16 @@ arma::mat expand_matrix(const arma::mat &X, uint m) {
     }
 
     return modified;
+}
+
+std::pair<arma::mat, arma::vec> grab_mlcup_dataset() {
+    arma::mat X;
+    X.load(DEFAULT_ML_CUP_PATH, arma::csv_ascii);
+    // grabbing target vector
+    arma::vec b = X.col(X.n_cols - 2);
+    // remove index column and target columns
+    X.shed_col(0);
+    X.shed_cols(X.n_cols - 2, X.n_cols - 1);
+
+    return {X, b};
 }

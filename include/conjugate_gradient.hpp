@@ -10,7 +10,7 @@
  * @param b target vector
  * @param n_iterations number of iterations [default value = 100]
  */
-arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, int n_iterations = 100);
+arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint n_iterations, bool store_results = true);
 
 
 #endif //CGQR_CONJUGATE_GRADIENT_HPP
