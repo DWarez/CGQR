@@ -30,7 +30,7 @@ std::pair<arma::mat, arma::mat> thin_qr(const arma::mat &X) {
 
     for(int i = 0; i < n; i++){
         //Compute householder
-        std::tie(hh, s)= compute_householder(trim_head_vector(R.col(i),i));
+        std::tie(hh, s)= compute_householder(R.col(i).tail(R.col(i).n_elem - i));
         //Compute H
         current_hh_mat = arma::eye(hh.n_elem, hh.n_elem) - 2*hh*hh.t();
         expanded = expand_matrix(current_hh_mat, m);
@@ -43,4 +43,16 @@ std::pair<arma::mat, arma::mat> thin_qr(const arma::mat &X) {
     }
 
     return {Q, R};
+}
+
+arma::vec solve_thin_qr(const arma::mat &Q, const arma::mat &R, const arma::vec &b) {
+    uint m = Q.n_rows;
+    uint n = Q.n_cols;
+    arma::mat R1;
+    R1 = R.head_rows(R.n_cols);
+    arma::vec w(b.n_elem, arma::fill::zeros);
+
+    w = R1.i() * (Q.t() * b);
+
+    return w;
 }

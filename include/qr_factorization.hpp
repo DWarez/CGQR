@@ -19,4 +19,13 @@ std::tuple<arma::vec, int> compute_householder(const arma::vec &x);
  */
 std::pair<arma::mat, arma::mat> thin_qr(const arma::mat &X);
 
+/**
+ * Solve the linear system using the thin QR factorization of the matrix
+ * @param Q Q of the QR
+ * @param R R of the QR
+ * @param b target vector
+ * @return vector of weights
+ */
+arma::vec solve_thin_qr(const arma::mat &Q, const arma::mat &R, const arma::vec &b);
+
 #endif //CGQR_QR_FACTORIZATION_HPP
