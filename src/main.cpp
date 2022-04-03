@@ -10,16 +10,15 @@ void cg_experiment() {
 
     arma::mat X;
     arma::vec b;
-    std::vector<double> residuals;
 
     std::tie(X, b) = grab_mlcup_dataset();
 
     to_normal_equations(X, b);
 
     // solution vector
-    arma::vec w = arma::vec(X.n_cols, arma::fill::randn);
+    arma::vec w = arma::vec(X.n_cols, arma::fill::zeros);
 
-    w = conjugate_gradient(X, b, 10);
+    w = conjugate_gradient(X, b, X.n_cols);
 }
 
 int main(int argc, char** argv) {

@@ -4,28 +4,33 @@
 #include <chrono>
 #include "../include/conjugate_gradient.hpp"
 
-arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint n_iterations, bool store_results) {
+arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_iterations, bool store_results) {
     assert(X.is_symmetric() && "Error: matrix X must be symmetric");
 
     arma::vec residual(b);
     arma::vec direction(b);
     arma::vec previous_residual(residual);
-    arma::vec w(b.n_elem, arma::fill::ones);
+    arma::vec w(b.n_elem, arma::fill::zeros);
+    double current_distance;
     std::vector<double> history;
+    uint i = 0;
 
     auto start = std::chrono::steady_clock::now();
     std::cout << "Starting iterations\n";
     // starting residual
-    history.push_back(arma::norm(X*w - b)/arma::norm(b));
+    current_distance = arma::norm(X*w - b)/arma::norm(b);
+    history.push_back(current_distance);
 
-    for(size_t i = 0; i < n_iterations; ++i) {
+    while(i < max_iterations && current_distance >= CONVERGENCE_THRESHOLD) {
         auto alpha = (((arma::dot(residual.t(), residual))/(direction.t() * X * direction)).eval())(0, 0);
         w = w + (alpha * direction);
         residual = residual - (alpha * X * direction);
         auto beta = (arma::dot(residual.t(), residual))/(arma::dot(previous_residual.t(), previous_residual));
         direction = residual + (beta * direction);
+        i++;
 
-        history.push_back(arma::norm(X*w - b)/arma::norm(b));
+        current_distance = arma::norm(X*w - b)/arma::norm(b);
+        history.push_back(current_distance);
     }
 
     if(store_results) {
@@ -37,11 +42,12 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint n_iter
             outputfile << x << " ";
 
         outputfile << std::endl;
+        outputfile.close();
 
         auto end = std::chrono::steady_clock::now();
         std::chrono::duration<double> diff = end - start;
 
-        outputfile << "\nTime of execution: " << diff.count();
+        std::cout << "Number of iterations: " << i <<"\nTime of execution: " << diff.count() << std::endl;
     }
 
     return w;
