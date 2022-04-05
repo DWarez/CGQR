@@ -6,6 +6,7 @@
 #include "../include/qr_factorization.hpp"
 
 void cg_experiment() {
+    std::cout << "\n\nStart of the CG experiment\n=====================" << std::endl;
 
     mkdir("../results", S_IRWXU);
 
@@ -21,10 +22,13 @@ void cg_experiment() {
 
     w = conjugate_gradient(n_X, n_b, X.n_cols);
 
-    std::cout << "Norm: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
+    std::cout << "Norm of CG: " << arma::norm(X*w - b) << std::endl;
+
+    std::cout << "=====================\nEnd of the CG experiment" << std::endl;
 }
 
 void qr_experiment() {
+    std::cout << "\n\nStart of the QR experiment\n=====================" << std::endl;
     arma::mat X, Q, R;
     arma::vec b;
 
@@ -34,7 +38,8 @@ void qr_experiment() {
 
     w = solve_thin_qr(Q, R, b);
 
-    std::cout << "Norm: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
+    std::cout << "Norm of QR: " << arma::norm(X*w - b) << std::endl;
+    std::cout << "=====================\nEnd of the QR experiment" << std::endl;
 }
 
 int main(int argc, char** argv) {

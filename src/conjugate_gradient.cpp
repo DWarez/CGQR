@@ -4,7 +4,7 @@
 #include <chrono>
 #include "../include/conjugate_gradient.hpp"
 
-arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_iterations, bool store_results) {
+arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_iterations, bool store_results, double threshold) {
     assert(X.is_symmetric() && "Error: matrix X must be symmetric");
 
     arma::vec residual(b);
@@ -21,7 +21,7 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
     current_distance = arma::norm(X*w - b)/arma::norm(b);
     history.push_back(current_distance);
 
-    while(i < max_iterations && current_distance >= CONVERGENCE_THRESHOLD) {
+    while(i < max_iterations && current_distance >= threshold) {
         double alpha = (((arma::dot(residual.t(), residual))/(direction.t() * X * direction)).eval())(0, 0);
         w = w + (alpha * direction);
         residual = residual - (alpha * X * direction);
@@ -29,7 +29,7 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
         direction = residual + (beta * direction);
         i++;
 
-        current_distance = arma::norm(X*w - b)/arma::norm(b);
+        current_distance = arma::norm(X*w - b);
         history.push_back(current_distance);
     }
 
