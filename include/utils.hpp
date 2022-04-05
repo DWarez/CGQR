@@ -10,7 +10,7 @@
  * @param X matrix of the system
  * @param b vector of the system
  */
-void to_normal_equations(arma::mat &X, arma::vec &b);
+std::pair<arma::mat, arma::vec> to_normal_equations(const arma::mat &X, const arma::vec &b);
 
 /**
  * Takes a matrix and expand its dimensions with the Identity matrix

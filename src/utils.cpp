@@ -1,9 +1,8 @@
 #include <armadillo>
 #include "../include/utils.hpp"
 
-void to_normal_equations(arma::mat &X, arma::vec &b) {
-    b = X.t() * b;
-    X = X.t() * X;
+std::pair<arma::mat, arma::vec> to_normal_equations(const arma::mat& X, const arma::vec& b) {
+    return {X.t() * X, X.t() * b};
 }
 
 arma::mat expand_matrix(const arma::mat &X, uint m) {

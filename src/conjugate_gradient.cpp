@@ -22,10 +22,10 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
     history.push_back(current_distance);
 
     while(i < max_iterations && current_distance >= CONVERGENCE_THRESHOLD) {
-        auto alpha = (((arma::dot(residual.t(), residual))/(direction.t() * X * direction)).eval())(0, 0);
+        double alpha = (((arma::dot(residual.t(), residual))/(direction.t() * X * direction)).eval())(0, 0);
         w = w + (alpha * direction);
         residual = residual - (alpha * X * direction);
-        auto beta = (arma::dot(residual.t(), residual))/(arma::dot(previous_residual.t(), previous_residual));
+        double beta = (arma::dot(residual.t(), residual))/(arma::dot(previous_residual.t(), previous_residual));
         direction = residual + (beta * direction);
         i++;
 

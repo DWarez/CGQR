@@ -9,7 +9,10 @@ bool cg_random_test() {
     arma::vec b(5, arma::fill::randn);
     arma::vec w = arma::zeros(5);
 
-    to_normal_equations(X, b);
+    arma::mat n_X;
+    arma::vec n_b;
+
+    std::tie(n_X, n_b) = to_normal_equations(X, b);
 
     std::cout << "Norm before: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
     w = conjugate_gradient(X, b, 5);
