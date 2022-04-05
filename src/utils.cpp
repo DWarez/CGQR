@@ -2,8 +2,8 @@
 #include "../include/utils.hpp"
 
 void to_normal_equations(arma::mat &X, arma::vec &b) {
-    X = X * X.t();
-    b = X * b;
+    b = X.t() * b;
+    X = X.t() * X;
 }
 
 arma::mat expand_matrix(const arma::mat &X, uint m) {
