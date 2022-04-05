@@ -43,7 +43,7 @@ void qr_experiment() {
 }
 
 int main(int argc, char** argv) {
-    cg_experiment();
+    //cg_experiment();
     qr_experiment();
     return 0;
 }

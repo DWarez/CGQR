@@ -1,4 +1,5 @@
 #include <armadillo>
+#include <ranges>
 #include "../include/qr_factorization.hpp"
 #include "../include/utils.hpp"
 
@@ -21,7 +22,7 @@ std::pair<arma::mat, arma::mat> thin_qr(const arma::mat &X) {
     uint m = X.n_rows;
     uint n = X.n_cols;
 
-    std::vector<arma::vec> hhs;
+    std::vector<arma::mat> hhs;
     arma::mat Q = arma::eye(m, n);
     arma::mat R(X);
     arma::mat current_hh_mat;
@@ -35,12 +36,10 @@ std::pair<arma::mat, arma::mat> thin_qr(const arma::mat &X) {
         current_hh_mat = arma::eye(hh.n_elem, hh.n_elem) - 2*hh*hh.t();
         expanded = expand_matrix(current_hh_mat, m);
         R = expanded*R;
-        hhs.push_back(hh);
+        hhs.push_back(expanded);
     }
-    for (int i = hhs.size() - 1; i >= 0; --i){
-        expanded = expand_matrix(arma::eye(hhs[i].size(), hhs[i].size()) - 2*hhs[i]*hhs[i].t(),m);
-        Q = expanded * Q;
-    }
+    for (auto &x: std::ranges::reverse_view(hhs))
+        Q = x * Q;
 
     return {Q, R};
 }
