@@ -35,6 +35,7 @@
 .idea
 cmake-build-debug
 CMakeFiles
+results
 Makefile
 CMakeCache.txt
 cmake_install.cmake
