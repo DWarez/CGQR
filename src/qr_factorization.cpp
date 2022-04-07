@@ -38,6 +38,7 @@ std::pair<arma::mat, arma::mat> thin_qr(const arma::mat &X) {
         R = expanded*R;
         hhs.push_back(expanded);
     }
+
     for (auto &x: std::ranges::reverse_view(hhs))
         Q = x * Q;
 
