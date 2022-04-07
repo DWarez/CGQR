@@ -14,7 +14,7 @@ void cg_experiment() {
     arma::vec b, n_b;
 
     std::tie(X, b) = grab_mlcup_dataset();
-
+    add_columns(X);
     std::tie(n_X, n_b) = to_normal_equations(X, b);
 
     // solution vector
@@ -33,6 +33,7 @@ void qr_experiment() {
     arma::vec b;
 
     std::tie(X, b) = grab_mlcup_dataset();
+    add_columns(X);
     arma::vec w(X.n_cols, arma::fill::zeros);
     std::tie(Q, R) = thin_qr(X);
 
@@ -43,7 +44,7 @@ void qr_experiment() {
 }
 
 int main(int argc, char** argv) {
-    //cg_experiment();
+    cg_experiment();
     qr_experiment();
     return 0;
 }

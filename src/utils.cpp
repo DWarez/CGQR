@@ -28,3 +28,16 @@ std::pair<arma::mat, arma::vec> grab_mlcup_dataset() {
 
     return {X, b};
 }
+
+void add_columns(arma::mat &X) {
+    X.insert_cols(X.n_cols, arma::log(arma::abs(X.col(3))));
+    X.insert_cols(X.n_cols,arma::log(arma::abs(X.col(1)%X.col(6))));
+    X.insert_cols(X.n_cols,arma::pow(X.col(2),3));
+    X.insert_cols(X.n_cols, X.col(5)%X.col(1));
+    X.insert_cols(X.n_cols, X.col(6)%X.col(7));
+    X.insert_cols(X.n_cols, arma::pow(X.col(4),2));
+    X.insert_cols(X.n_cols, X.col(7)%X.col(7));
+    X.insert_cols(X.n_cols, arma::sin(X.col(10)));
+    X.insert_cols(X.n_cols, arma::cos(X.col(12)));
+    X.insert_cols(X.n_cols, X.col(5)%X.col(9));
+}
