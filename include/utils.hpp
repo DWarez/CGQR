@@ -25,9 +25,11 @@ arma::mat expand_matrix(const arma::mat &X, uint m);
  * @return Matrix of data-points and a target vector (11th column)
  */
 std::pair<arma::mat, arma::vec> grab_mlcup_dataset();
+
 /**
  * Add 10 new columns to X generated non linearly from X itself
  * @param X input matrix
  */
 void add_columns(arma::mat &X);
+
 #endif //CGQR_UTILS_HPP

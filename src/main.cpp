@@ -6,7 +6,7 @@
 #include "../include/qr_factorization.hpp"
 
 void cg_experiment() {
-    std::cout << "\n\nStart of the CG experiment\n=====================" << std::endl;
+    std::cout << "\n\nStart of the CG experiment\n==========================" << std::endl;
 
     mkdir("../results", S_IRWXU);
 
@@ -20,31 +20,31 @@ void cg_experiment() {
     // solution vector
     arma::vec w = arma::vec(X.n_cols, arma::fill::zeros);
 
-    w = conjugate_gradient(n_X, n_b, X.n_cols);
+    w = conjugate_gradient(n_X, n_b, 400);
 
     std::cout << "Norm of CG: " << arma::norm(X*w - b) << std::endl;
 
-    std::cout << "=====================\nEnd of the CG experiment" << std::endl;
+    std::cout << "==========================\nEnd of the CG experiment" << std::endl;
 }
 
 void qr_experiment() {
-    std::cout << "\n\nStart of the QR experiment\n=====================" << std::endl;
+    std::cout << "\n\nStart of the QR experiment\n==========================" << std::endl;
     arma::mat X, Q, R;
     arma::vec b;
 
     std::tie(X, b) = grab_mlcup_dataset();
     add_columns(X);
     arma::vec w(X.n_cols, arma::fill::zeros);
-    std::tie(Q, R) = thin_qr(X);
+    std::tie(Q, R) = thin_qr(X, b);
 
-    w = solve_thin_qr(Q, R, b);
+    w = solve_thin_qr(Q, R);
 
     std::cout << "Norm of QR: " << arma::norm(X*w - b) << std::endl;
-    std::cout << "=====================\nEnd of the QR experiment" << std::endl;
+    std::cout << "==========================\nEnd of the QR experiment" << std::endl;
 }
 
 int main(int argc, char** argv) {
-    cg_experiment();
+    // cg_experiment();
     qr_experiment();
     return 0;
 }
