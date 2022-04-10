@@ -11,7 +11,8 @@
  * @param b target vector
  * @param max_iterations number of iterations [default value = 100]
  */
-arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_iterations, bool store_results = true, double threshold = CONVERGENCE_THRESHOLD);
+arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_iterations, bool store_results = true,
+                             double threshold = CONVERGENCE_THRESHOLD, bool early_stopping = true, uint es_tries = 5);
 
 
 #endif //CGQR_CONJUGATE_GRADIENT_HPP

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <armadillo>
 #include <sys/stat.h>
+#include <chrono>
 #include "../include/utils.hpp"
 #include "../include/conjugate_gradient.hpp"
 #include "../include/qr_factorization.hpp"
@@ -21,7 +22,7 @@ void cg_experiment() {
     arma::vec solution = arma::solve(X, b);
     arma::vec w = arma::vec(X.n_cols, arma::fill::zeros);
 
-    w = conjugate_gradient(n_X, n_b, 10000);
+    w = conjugate_gradient(n_X, n_b, 20000);
 
     std::cout << "Norm of CG: " << arma::norm(X*w - b) << std::endl;
     std::cout << "Distance from optimal solution: " << arma::norm(w - solution) << std::endl;
@@ -39,17 +40,23 @@ void qr_experiment() {
     arma::vec solution = arma::solve(X, b);
 
     arma::vec w(X.n_cols, arma::fill::zeros);
+
+    auto start = std::chrono::steady_clock::now();
     std::tie(Q, R) = thin_qr(X, b);
 
     w = solve_thin_qr(Q, R);
 
+    auto end = std::chrono::steady_clock::now();
+    std::chrono::duration<double> diff = end - start;
+
     std::cout << "Norm of QR: " << arma::norm(X*w - b) << std::endl;
     std::cout << "Distance from optimal solution: " << arma::norm(w - solution) << std::endl;
+    std::cout << "Execution time: " << diff.count() << std::endl;
     std::cout << "==========================\nEnd of the QR experiment" << std::endl;
 }
 
 int main(int argc, char** argv) {
     cg_experiment();
-    qr_experiment();
+    // qr_experiment();
     return 0;
 }
