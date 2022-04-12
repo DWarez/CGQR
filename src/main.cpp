@@ -6,6 +6,35 @@
 #include "../include/conjugate_gradient.hpp"
 #include "../include/qr_factorization.hpp"
 
+void problem_properties() {
+    arma::mat X, n_X;
+    arma::vec b, n_b;
+    arma::vec eigval;
+    arma::mat eigvec;
+
+    std::tie(X, b) = grab_mlcup_dataset();
+    add_columns(X);
+
+    std::cout << "X:\n\tcols: " << X.n_cols << "\trows: " << X.n_rows << "\n";
+    std::cout << "b:\n\t elements: " << b.n_elem << "\n";
+
+    std::tie(n_X, n_b) = to_normal_equations(X, b);
+    arma::vec solution = arma::solve(X, b);
+    arma::vec w(X.n_cols, arma::fill::zeros);
+
+    std::cout << "X'X:\n\tcols: " << n_X.n_cols << "\trows: " << n_X.n_rows << "\n";
+    arma::eig_sym(eigval, eigvec, n_X);
+    std::cout << "X'X:\n\teigenvalues: ";
+    for(auto &x: eigval) {
+        std::cout << x << "\t";
+    }
+    std::cout << "\n\tcondition number: " << eigval.back()/eigval.front();
+    auto difference = w - solution;
+    auto x_norm = arma::sqrt(difference.t() * n_X * difference);
+    auto fraction = std::pow(((std::sqrt(eigval.back()/eigval.front()) - 1)/(std::sqrt(eigval.back()/eigval.front()) + 1)), 200);
+    std::cout << "\n\tk_th iteration bound: " << 2 * fraction * x_norm << "\n";
+}
+
 void cg_experiment() {
     std::cout << "\n\nStart of the CG experiment\n==========================" << std::endl;
 
@@ -22,9 +51,9 @@ void cg_experiment() {
     arma::vec solution = arma::solve(X, b);
     arma::vec w = arma::vec(X.n_cols, arma::fill::zeros);
 
-    w = conjugate_gradient(n_X, n_b, 20000);
+    w = conjugate_gradient(n_X, n_b, 100);
 
-    std::cout << "Norm of CG: " << arma::norm(X*w - b) << std::endl;
+    std::cout << "Norm of CG: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
     std::cout << "Distance from optimal solution: " << arma::norm(w - solution) << std::endl;
 
     std::cout << "==========================\nEnd of the CG experiment" << std::endl;
@@ -49,13 +78,14 @@ void qr_experiment() {
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<double> diff = end - start;
 
-    std::cout << "Norm of QR: " << arma::norm(X*w - b) << std::endl;
+    std::cout << "Norm of QR: " << arma::norm(X*w - b)/arma::norm(b)  << std::endl;
     std::cout << "Distance from optimal solution: " << arma::norm(w - solution) << std::endl;
     std::cout << "Execution time: " << diff.count() << std::endl;
     std::cout << "==========================\nEnd of the QR experiment" << std::endl;
 }
 
 int main(int argc, char** argv) {
+    // problem_properties();
     cg_experiment();
     // qr_experiment();
     return 0;

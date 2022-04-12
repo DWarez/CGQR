@@ -9,7 +9,7 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
     assert(X.is_symmetric() && "Error: matrix X must be symmetric");
 
     arma::vec residual(b);
-    arma::vec direction(b);
+    arma::vec direction(-b);
     arma::vec previous_residual(residual);
     arma::vec w(b.n_elem, arma::fill::zeros);
     double current_distance;
@@ -24,11 +24,12 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
     history.push_back(current_distance);
 
     while(i < max_iterations && current_distance >= threshold && tries < es_tries) {
-        double alpha = (((arma::dot(residual.t(), residual))/(direction.t() * X * direction)).eval())(0, 0);
+        double alpha = - arma::as_scalar((residual.t() * residual)/(direction.t() * X * direction));
         w = w + (alpha * direction);
         residual = residual - (alpha * X * direction);
-        double beta = (arma::dot(residual.t(), residual))/(arma::dot(previous_residual.t(), previous_residual));
-        direction = residual + (beta * direction);
+        double beta = arma::as_scalar((residual.t() * residual)/(previous_residual.t() * previous_residual));
+        previous_residual = residual;
+        direction = -residual + (beta * direction);
         i++;
 
         current_distance = arma::norm(X*w - b);
