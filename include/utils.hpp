@@ -32,4 +32,8 @@ std::pair<arma::mat, arma::vec> grab_mlcup_dataset();
  */
 void add_columns(arma::mat &X);
 
+/**
+ * Prints various properties about the problem solved in the experiments
+ */
+void problem_properties();
 #endif //CGQR_UTILS_HPP

@@ -41,3 +41,32 @@ void add_columns(arma::mat &X) {
     X.insert_cols(X.n_cols, arma::cos(X.col(12)));
     X.insert_cols(X.n_cols, X.col(5)%X.col(9));
 }
+
+void problem_properties() {
+    arma::mat X, n_X;
+    arma::vec b, n_b;
+    arma::vec eigval;
+    arma::mat eigvec;
+
+    std::tie(X, b) = grab_mlcup_dataset();
+    add_columns(X);
+
+    std::cout << "X:\n\tcols: " << X.n_cols << "\trows: " << X.n_rows << "\n";
+    std::cout << "b:\n\t elements: " << b.n_elem << "\n";
+
+    std::tie(n_X, n_b) = to_normal_equations(X, b);
+    arma::vec solution = arma::solve(X, b);
+    arma::vec w(X.n_cols, arma::fill::zeros);
+
+    std::cout << "X'X:\n\tcols: " << n_X.n_cols << "\trows: " << n_X.n_rows << "\n";
+    arma::eig_sym(eigval, eigvec, n_X);
+    std::cout << "X'X:\n\teigenvalues: ";
+    for(auto &x: eigval) {
+        std::cout << x << "\t";
+    }
+    std::cout << "\n\tcondition number: " << eigval.back()/eigval.front();
+    auto difference = w - solution;
+    auto x_norm = arma::sqrt(difference.t() * n_X * difference);
+    auto fraction = std::pow(((std::sqrt(eigval.back()/eigval.front()) - 1)/(std::sqrt(eigval.back()/eigval.front()) + 1)), 35);
+    std::cout << "\n\tk_th iteration bound: " << 2 * fraction * x_norm << "\n";
+}
