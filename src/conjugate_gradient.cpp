@@ -38,7 +38,6 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
     }
 
     auto end = std::chrono::steady_clock::now();
-    std::chrono::duration<double> diff = end - start;
 
     if(store_results) {
         std::cout << "Storing results\n";
@@ -52,7 +51,8 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
         outputfile.close();
     }
 
-    std::cout << "Number of iterations: " << i <<"\nTime of execution: " << diff.count() << std::endl;
+    std::cout << "Number of iterations: " << i <<"\nTime of execution: "
+                << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() / 1000 << " ms\n";
 
     return w;
 }

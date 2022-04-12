@@ -37,8 +37,9 @@ std::pair<arma::mat, arma::mat> thin_qr(const arma::mat &X, const arma::vec &b) 
         //Compute H
         current_hh_mat = arma::eye(hh.n_elem, hh.n_elem) - 2*hh*hh.t();
         expanded = expand_matrix(current_hh_mat, m);
+        // R.submat(i, i, m-1, n-1) = current_hh_mat * R.submat(i, i, m-1, n-1);
         R = expanded * R;
-        Q1b = expanded.t() * Q1b;
+        Q1b = expanded * Q1b;
     }
 
     return {Q1b, R};

@@ -42,39 +42,10 @@ bool thin_qr_random_test() {
 
     arma::mat Q(X.n_rows, X.n_cols);
     arma::mat R(X.n_rows, X.n_cols);
-    std::tie(Q, R) = thin_qr(X);
+    std::tie(Q, R) = thin_qr(X, arma::vec(X.n_rows, arma::fill::randn));
 
-    std::cout << "Q: \n" << Q << std::endl;
+    std::cout << "Q1b: \n" << Q << std::endl;
     std::cout << "R: \n" << R << std::endl;
-    return true;
-}
-
-bool thin_qr_specific_test() {
-    arma::mat X(4,4);
-    X(0,0) = 7;
-    X(0,1) = 9;
-    X(0,2) = 1;
-    X(0,3) = 6;
-    X(1,0) = 5;
-    X(1,1) = 8;
-    X(1,2) = 9;
-    X(1,3) = 4;
-    X(2,0) = 9;
-    X(2,1) = 4;
-    X(2,2) = 10;
-    X(2,3) = 5;
-    X(3,0) = 4;
-    X(3,1) = 6;
-    X(3,2) = 8;
-
-    std::pair result = thin_qr(X);
-    arma::mat Q = std::get<0>(result);
-    arma::mat R = std::get<1>(result);
-
-    std::cout << "X: \n" << X << std::endl;
-    std::cout << "Q1 \n" << Q << std::endl;
-    std::cout << "R \n" << R << std::endl;
-
     return true;
 }
 
@@ -84,14 +55,13 @@ bool solve_thin_qr_random_test() {
 
     arma::mat Q(X.n_rows, X.n_cols);
     arma::mat R(X.n_rows, X.n_cols);
-    std::tie(Q, R) = thin_qr(X);
 
     arma::vec b(X.n_rows, arma::fill::randn);
     arma::vec w(X.n_cols, arma::fill::randn);
 
     std::cout << "Norm before: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
-
-    w = solve_thin_qr(Q, R, b);
+    std::tie(Q, R) = thin_qr(X, b);
+    w = solve_thin_qr(Q, R);
 
     std::cout << "Norm after: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
 
@@ -101,10 +71,9 @@ bool solve_thin_qr_random_test() {
 int main() {
     // hh_random_test();
     // hh_set_random_test();
-    //matrix_expansion_random_test();
-    // thin_qr_random_test();
-    // thin_qr_specific_test();
-    solve_thin_qr_random_test();
+    // matrix_expansion_random_test();
+    thin_qr_random_test();
+    // solve_thin_qr_random_test();
     return 0;
 }
 

@@ -52,7 +52,7 @@ void problem_properties() {
     add_columns(X);
 
     std::cout << "X:\n\tcols: " << X.n_cols << "\trows: " << X.n_rows << "\n";
-    std::cout << "b:\n\t elements: " << b.n_elem << "\n";
+    std::cout << "b:\n\telements: " << b.n_elem << "\n";
 
     std::tie(n_X, n_b) = to_normal_equations(X, b);
     arma::vec solution = arma::solve(X, b);
