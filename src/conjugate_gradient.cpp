@@ -52,7 +52,7 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
     }
 
     std::cout << "Number of iterations: " << i - tries <<"\nTime of execution: "
-                << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() / 1000 << " ms\n";
+                << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " us\n";
 
     return w;
 }

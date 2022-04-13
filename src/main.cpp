@@ -49,7 +49,7 @@ void qr_experiment() {
     auto end = std::chrono::steady_clock::now();
 
     std::cout << "Execution time: " <<
-                    std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()/1000<< " ms \n";
+                    std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()<< " us \n";
     std::cout << "Norm of QR: " << arma::norm(X*w - b)/arma::norm(b)  << "\n";
     std::cout << "Distance from optimal solution: " << arma::norm(w - solution) << "\n";
     std::cout << "==========================\nEnd of the QR experiment" << std::endl;
