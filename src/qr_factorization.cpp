@@ -1,7 +1,6 @@
 #include <armadillo>
 #include <ranges>
 #include "../include/qr_factorization.hpp"
-#include "../include/utils.hpp"
 
 std::tuple<arma::vec, int> compute_householder(const arma::vec &x) {
     arma::vec householder = arma::vec(x);
@@ -23,27 +22,21 @@ std::pair<arma::mat, arma::mat> thin_qr(const arma::mat &X, const arma::vec &b) 
     uint n = X.n_cols;
 
     std::vector<arma::mat> hhs;
-    arma::mat Q1b = arma::eye(m, 1);
+    arma::mat Q1b(b);
     arma::mat R(X);
-    arma::mat current_hh_mat;
     arma::vec hh;
-    arma::mat expanded;
-
-    Q1b = b;
 
     for(int i = 0; i < n; ++i){
-        //Compute householder
         std::tie(hh, s)= compute_householder(R.col(i).tail(R.col(i).n_elem - i));
-        //Compute H
-        current_hh_mat = arma::eye(hh.n_elem, hh.n_elem) - 2*hh*hh.t();
-        expanded = expand_matrix(current_hh_mat, m);
-        // R.submat(i, i, m-1, n-1) = current_hh_mat * R.submat(i, i, m-1, n-1);
-        R = expanded * R;
-        Q1b = expanded * Q1b;
+        R.submat(i, i, m-1, n-1) = R.submat(i, i, m-1, n-1) -
+                2*hh*(hh.t() * R.submat(i, i, m-1, n-1));
+        Q1b.submat(i, 0, m-1, 0) = Q1b.submat(i, 0, m-1, 0) -
+              2*hh*(hh.t() * Q1b.submat(i, 0, m-1, 0));
     }
 
     return {Q1b, R};
 }
+
 
 arma::vec solve_thin_qr(const arma::mat &Q1b, const arma::mat &R) {
     arma::mat R1;

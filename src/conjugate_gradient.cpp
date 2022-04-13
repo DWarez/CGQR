@@ -33,7 +33,7 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
         i++;
 
         current_distance = arma::norm(X*w - b);
-        if(history.back() == current_distance) tries++;
+        if(history.back() == current_distance) tries++; else tries = 0;
         history.push_back(current_distance);
     }
 
@@ -51,7 +51,7 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
         outputfile.close();
     }
 
-    std::cout << "Number of iterations: " << i <<"\nTime of execution: "
+    std::cout << "Number of iterations: " << i - tries <<"\nTime of execution: "
                 << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() / 1000 << " ms\n";
 
     return w;

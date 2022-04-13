@@ -13,14 +13,6 @@
 std::pair<arma::mat, arma::vec> to_normal_equations(const arma::mat &X, const arma::vec &b);
 
 /**
- * Takes a matrix and expand its dimensions with the Identity matrix
- * @param X input matrix
- * @param m desired dimension
- * @return expanded matrix
- */
-arma::mat expand_matrix(const arma::mat &X, uint m);
-
-/**
  * Returns the ML Cup dataset
  * @return Matrix of data-points and a target vector (11th column)
  */

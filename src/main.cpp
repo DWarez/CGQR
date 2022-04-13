@@ -22,7 +22,7 @@ void cg_experiment() {
     arma::vec solution = arma::solve(X, b);
     arma::vec w = arma::vec(X.n_cols, arma::fill::zeros);
 
-    w = conjugate_gradient(n_X, n_b, 10);
+    w = conjugate_gradient(n_X, n_b, 30);
 
     std::cout << "Norm of CG: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
     std::cout << "Distance from optimal solution: " << arma::norm(w - solution) << std::endl;
@@ -48,15 +48,16 @@ void qr_experiment() {
 
     auto end = std::chrono::steady_clock::now();
 
-    std::cout << "Execution time: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms \n";
+    std::cout << "Execution time: " <<
+                    std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()/1000<< " ms \n";
     std::cout << "Norm of QR: " << arma::norm(X*w - b)/arma::norm(b)  << "\n";
     std::cout << "Distance from optimal solution: " << arma::norm(w - solution) << "\n";
     std::cout << "==========================\nEnd of the QR experiment" << std::endl;
 }
 
 int main(int argc, char** argv) {
-    // problem_properties();
-    // cg_experiment();
+    problem_properties();
+    cg_experiment();
     qr_experiment();
     return 0;
 }

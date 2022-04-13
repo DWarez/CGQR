@@ -5,18 +5,6 @@ std::pair<arma::mat, arma::vec> to_normal_equations(const arma::mat& X, const ar
     return {X.t() * X, X.t() * b};
 }
 
-arma::mat expand_matrix(const arma::mat &X, uint m) {
-    arma::mat modified = arma::eye(m, m);
-
-    for(size_t i = m - X.n_rows; i < m; ++i) {
-        for(size_t j = m - X.n_cols; j < m; ++j) {
-            modified(i,j) = X(i - (m - X.n_rows), j - (m - X.n_cols));
-        }
-    }
-
-    return modified;
-}
-
 std::pair<arma::mat, arma::vec> grab_mlcup_dataset() {
     arma::mat X;
     X.load(DEFAULT_ML_CUP_PATH, arma::csv_ascii);
