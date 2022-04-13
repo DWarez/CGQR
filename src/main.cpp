@@ -52,12 +52,13 @@ void qr_experiment() {
                     std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()<< " us \n";
     std::cout << "Norm of QR: " << arma::norm(X*w - b)/arma::norm(b)  << "\n";
     std::cout << "Distance from optimal solution: " << arma::norm(w - solution) << "\n";
+    std::cout << "Gradient: " << arma::norm(X.t() * X * w - X.t() * b) << "\n";
     std::cout << "==========================\nEnd of the QR experiment" << std::endl;
 }
 
 int main(int argc, char** argv) {
-    problem_properties();
-    cg_experiment();
+    // problem_properties();
+    // cg_experiment();
     qr_experiment();
     return 0;
 }
