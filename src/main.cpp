@@ -26,7 +26,7 @@ void cg_experiment() {
 
     std::cout << "Norm of CG: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
     std::cout << "Distance from optimal solution: " << arma::norm(w - solution) << std::endl;
-
+    std::cout << "Gradient: " << arma::norm(X.t() * X * w - X.t() * b) << "\n";
     std::cout << "==========================\nEnd of the CG experiment" << std::endl;
 }
 
@@ -58,7 +58,7 @@ void qr_experiment() {
 
 int main(int argc, char** argv) {
     // problem_properties();
-    // cg_experiment();
-    qr_experiment();
+    cg_experiment();
+    // qr_experiment();
     return 0;
 }

@@ -5,7 +5,7 @@
 #include "../include/conjugate_gradient.hpp"
 
 arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_iterations, bool store_results,
-                             double threshold, bool early_stopping, uint es_tries) {
+                             double threshold, uint es_tries) {
     assert(X.is_symmetric() && "Error: matrix X must be symmetric");
 
     arma::vec residual(b);
@@ -17,8 +17,6 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
     uint i = 0;
     uint tries = 0;
 
-    auto start = std::chrono::steady_clock::now();
-    std::cout << "Starting iterations\n";
     // starting residual
     current_distance = arma::norm(X*w - b)/arma::norm(b);
     history.push_back(current_distance);
@@ -37,10 +35,7 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
         history.push_back(current_distance);
     }
 
-    auto end = std::chrono::steady_clock::now();
-
     if(store_results) {
-        std::cout << "Storing results\n";
         mkdir("../results", S_IRWXU);
         std::ofstream outputfile("../results/cg_run.txt", std::ios::trunc);
 
@@ -51,8 +46,7 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
         outputfile.close();
     }
 
-    std::cout << "Number of iterations: " << i - tries <<"\nTime of execution: "
-                << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " us\n";
+    std::cout << "Number of iterations: " << i - tries << "\n";
 
     return w;
 }

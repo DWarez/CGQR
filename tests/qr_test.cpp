@@ -1,57 +1,11 @@
 #include <iostream>
 #include <armadillo>
 #include "../include/qr_factorization.hpp"
-#include "../include/utils.hpp"
 
-bool hh_random_test() {
+bool thin_qr_random_test(uint m, uint n) {
+    std::cout << "\n\nStart of the QR test\n==========================" << std::endl;
     arma::arma_rng::set_seed_random();
-    arma::mat X(5, 5, arma::fill::randn);
-    arma::vec v = X.col(0);
-
-    std::cout << X << std::endl;
-    std::cout << v << std::endl;
-    std::cout << "Computing householder vector from v" << std::endl;
-
-    arma::vec householder;
-    int s;
-    std::tie(householder, s) = compute_householder(v);
-
-    std::cout << "HH Vector: " << householder << std::endl;
-    arma::mat H = arma::eye(householder.n_elem, householder.n_elem) - 2 * householder * householder.t();
-    std::cout << "Modified matrix X: " << std::endl;
-    std::cout << H * X << std::endl;
-
-
-    return true;
-}
-
-bool matrix_expansion_random_test() {
-    arma::arma_rng::set_seed_random();
-    arma::mat X(5, 5, arma::fill::randn);
-
-    std::cout << "X: \n" << X << std::endl;
-    auto new_X = expand_matrix(X, 5);
-    std::cout << "Expanded X: \n " << new_X << std::endl;
-    return true;
-}
-
-bool thin_qr_random_test() {
-    arma::arma_rng::set_seed_random();
-    arma::mat X(15, 4, arma::fill::randn);
-    std::cout << "X: \n" << X << std::endl;
-
-    arma::mat Q(X.n_rows, X.n_cols);
-    arma::mat R(X.n_rows, X.n_cols);
-    std::tie(Q, R) = thin_qr(X, arma::vec(X.n_rows, arma::fill::randn));
-
-    std::cout << "Q1b: \n" << Q << std::endl;
-    std::cout << "R: \n" << R << std::endl;
-    return true;
-}
-
-bool solve_thin_qr_random_test() {
-    arma::arma_rng::set_seed_random();
-    arma::mat X(15, 4, arma::fill::randn);
+    arma::mat X(m, n, arma::fill::randn);
 
     arma::mat Q(X.n_rows, X.n_cols);
     arma::mat R(X.n_rows, X.n_cols);
@@ -59,21 +13,31 @@ bool solve_thin_qr_random_test() {
     arma::vec b(X.n_rows, arma::fill::randn);
     arma::vec w(X.n_cols, arma::fill::randn);
 
-    std::cout << "Norm before: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
+    arma::vec solution = arma::solve(X, b);
+
+    auto start = std::chrono::steady_clock::now();
+
     std::tie(Q, R) = thin_qr(X, b);
     w = solve_thin_qr(Q, R);
 
-    std::cout << "Norm after: " << arma::norm(X*w - b)/arma::norm(b) << std::endl;
+    auto end = std::chrono::steady_clock::now();
+
+    std::cout << "Execution time: " <<
+              std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()<< " us \n";
+    std::cout << "Norm of QR: " << arma::norm(X*w - b)/arma::norm(b)  << "\n";
+    std::cout << "Distance from optimal solution: " << arma::norm(w - solution) << "\n";
+    std::cout << "Gradient: " << arma::norm(X.t() * X * w - X.t() * b) << "\n";
+    std::cout << "==========================\nEnd of the QR experiment" << std::endl;
 
     return true;
 }
 
-int main() {
-    // hh_random_test();
-    // hh_set_random_test();
-    // matrix_expansion_random_test();
-    thin_qr_random_test();
-    // solve_thin_qr_random_test();
+int main(int argc, char** argv) {
+    if(argc != 3) {
+        std::cout << "Wrong parameters.\nUsage:\n\t./qr_test N_ROWS N_COLUMNS";
+        return -1;
+    }
+    thin_qr_random_test(std::strtoul(argv[1], nullptr, 10), std::strtoul(argv[2], nullptr, 10));
     return 0;
 }
 
