@@ -16,7 +16,16 @@ If you wish to build from source you need [CMake](https://cmake.org/).
 You'll also need to install [Armadillo](http://arma.sourceforge.net), the only dependency
 of this project.
 
-Then:
+We suggest to use WLS in case you're running on Windows. From the WLS (Ubuntu) shell:
+```bash
+# install required packages
+$ sudo apt install build-essential cmake liblapack-dev libblas-dev libboost-dev
+
+# install Armadillo
+sudo apt-get install libarmadillo-dev
+```
+
+Then, clone and compile from source:
 
 ```bash
 # clone the repository
@@ -29,4 +38,19 @@ $ cd CGQR
 $ cmake -B build
 $ cd build
 $ make
+```
+
+To execute the entire experiment, run:
+
+```bash
+# from the CGQR directory navigate into build directory
+$ cd build
+
+# run the experiment
+$ ./CGQR
+
+# if you want to run a test, from the build directory run
+$ ./cg_test # Conjugate Gradient test
+# or
+$ ./qr_test # QR factorization test
 ```

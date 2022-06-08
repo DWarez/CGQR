@@ -57,8 +57,8 @@ void qr_experiment() {
 }
 
 int main(int argc, char** argv) {
-    // problem_properties();
+    problem_properties();
     cg_experiment();
-    // qr_experiment();
+    qr_experiment();
     return 0;
 }

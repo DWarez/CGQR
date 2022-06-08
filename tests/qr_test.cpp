@@ -34,7 +34,7 @@ bool thin_qr_random_test(uint m, uint n) {
 
 int main(int argc, char** argv) {
     if(argc != 3) {
-        std::cout << "Wrong parameters.\nUsage:\n\t./qr_test N_ROWS N_COLUMNS";
+        std::cout << "Wrong parameters.\nUsage:\n\t./qr_test N_ROWS N_COLUMNS" << std::endl;
         return -1;
     }
     thin_qr_random_test(std::strtoul(argv[1], nullptr, 10), std::strtoul(argv[2], nullptr, 10));

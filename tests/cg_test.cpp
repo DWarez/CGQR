@@ -39,6 +39,6 @@ int main(int argc, char** argv) {
     else if(argc == 4)
         cg_random_test(std::strtoul(argv[1], nullptr, 10), std::strtoul(argv[2], nullptr, 10), std::strtoul(argv[3], nullptr, 10));
     else
-        std::cout << "Missing required arguments\nUsage: \n\t ./cg_test N_ROWS N_COLS [OPTIONAL]EARLY_STOPPING_ITERATIONS";
+        std::cout << "Missing required arguments\nUsage: \n\t ./cg_test N_ROWS N_COLS [OPTIONAL]EARLY_STOPPING_ITERATIONS" << std::endl;
     return 0;
 }
