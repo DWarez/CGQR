@@ -21,7 +21,7 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
     current_distance = arma::norm(X*w - b)/arma::norm(b);
     history.push_back(current_distance);
 
-    while(i < max_iterations && current_distance >= threshold && tries < es_tries) {
+    while(i < max_iterations &&  tries < es_tries) {
         double alpha = - arma::as_scalar((residual.t() * residual)/(direction.t() * X * direction));
         w = w + (alpha * direction);
         residual = residual - (alpha * X * direction);
@@ -31,6 +31,7 @@ arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_it
         i++;
 
         current_distance = arma::norm(X*w - b);
+        if(current_distance < threshold) break;
         if(history.back() == current_distance) tries++; else tries = 0;
         history.push_back(current_distance);
     }
