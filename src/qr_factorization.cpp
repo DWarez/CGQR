@@ -1,5 +1,4 @@
 #include <armadillo>
-//#include <ranges>
 #include "../include/qr_factorization.hpp"
 
 std::tuple<arma::vec, int> compute_householder(const arma::vec &x) {
