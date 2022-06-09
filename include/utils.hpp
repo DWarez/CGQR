@@ -9,6 +9,7 @@
  * Transforms the original system into the system of normal equations
  * @param X matrix of the system
  * @param b vector of the system
+ * @return pair<X'X, X'b>
  */
 std::pair<arma::mat, arma::vec> to_normal_equations(const arma::mat &X, const arma::vec &b);
 

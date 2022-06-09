@@ -9,7 +9,7 @@
  * computes the solution vector w using the conjugate gradient method.
  * @param X positive definite symmetric matrix
  * @param b target vector
- * @param max_iterations number of iterations [default value = 100]
+ * @param max_iterations number of iterations
  */
 arma::vec conjugate_gradient(const arma::mat &X, const arma::vec &b, uint max_iterations, bool store_results = true,
                              double threshold = CONVERGENCE_THRESHOLD, uint es_tries = 5);
